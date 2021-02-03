@@ -41,7 +41,6 @@ class Graph {
       let neighbors = this.adjList[vertex];
       queue.push(...neighbors);
     }
-    console.log(order);
     return order;
 
   }
@@ -58,7 +57,6 @@ class Graph {
       let neighbors = this.adjList[vertex];
       stack.push(...neighbors);
     }
-    console.log(order);
     return order;
 
   }
@@ -66,12 +64,15 @@ class Graph {
   depthFirstTraversalRecursive(startingVertex, visited = new Set(), vertices = []) {
     if (visited.has(startingVertex)) return;
     let neighbors = this.adjList[startingVertex];
-    neighbors.forEach(neighbor => {
 
+    vertices.push(startingVertex);
+    visited.add(startingVertex);
+
+    neighbors.forEach(neighbor => {
+      this.depthFirstTraversalRecursive(neighbor, visited, vertices)
     });
 
-    this.depthFirstTraversalRecursive()
-
+    return vertices;
   }
 
 }
