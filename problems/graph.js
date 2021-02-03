@@ -1,31 +1,77 @@
 
 class Graph {
   constructor() {
-    // Code goes here ...
+    this.adjList = {};
   }
 
   addVertex(vertex) {
-    // Code goes here ...
+    if (!this.adjList[vertex]) {
+      this.adjList[vertex] = [];
+    }
   }
 
   addEdges(srcValue, destValue) {
-    // Code goes here ...
+    if (!this.adjList[srcValue]) this.addVertex(srcValue);
+    if (!this.adjList[destValue]) this.addVertex(destValue);
+
+    this.adjList[srcValue].push(destValue);
+    this.adjList[destValue].push(srcValue);
   }
 
   buildGraph(edges) {
-    // Code goes here ...
+    for (let i = 0; i < edges.length; i++) {
+      const edge = edges[i];
+      this.addEdges(edge[0], edge[1]);
+    }
+    return this.adjList;
   }
 
+
+
+
   breadthFirstTraversal(startingVertex) {
-    // Code goes here ...
+    let queue = [startingVertex];
+    let visited = new Set();
+    let order = [];
+    while(queue.length) {
+      let vertex = queue.shift();
+      if (visited.has(vertex)) continue;
+      visited.add(vertex);
+      order.push(vertex);
+      let neighbors = this.adjList[vertex];
+      queue.push(...neighbors);
+    }
+    console.log(order);
+    return order;
+
   }
 
   depthFirstTraversalIterative(startingVertex) {
-    // Code goes here ...
+    let stack = [startingVertex];
+    let visited = new Set();
+    let order = [];
+    while(stack.length) {
+      let vertex = stack.pop();
+      if (visited.has(vertex)) continue;
+      visited.add(vertex);
+      order.push(vertex);
+      let neighbors = this.adjList[vertex];
+      stack.push(...neighbors);
+    }
+    console.log(order);
+    return order;
+
   }
 
   depthFirstTraversalRecursive(startingVertex, visited = new Set(), vertices = []) {
-    // Code goes here ...
+    if (visited.has(startingVertex)) return;
+    let neighbors = this.adjList[startingVertex];
+    neighbors.forEach(neighbor => {
+
+    });
+
+    this.depthFirstTraversalRecursive()
+
   }
 
 }
